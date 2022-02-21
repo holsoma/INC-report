@@ -1,0 +1,719 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Development Guide</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9a209e51-e85f-4051-8fd7-0787e408e811" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/nasa_earth_grid.jpg" style="object-position:center 48.209999999999994%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">💻</span></div><h1 class="page-title">Development Guide</h1></header><div class="page-body"><nav id="bf07b21f-2c0d-4ed0-8c0a-96f84c805152" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#840a6bed-2bf5-4119-9a0e-0a893a3ff7a8">Folder Structure</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a4677dfe-74a9-4ff4-8ff6-ea23d05da14f">Dev Environment SETUP</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#78b8f4b4-b20a-4bfb-8a09-7dd9f742ce2c">ElasticSearch</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#47a46718-dac9-42fc-ab7b-7810f6eac8bb">REST API</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5e43c221-529c-42eb-b62d-b61d3aba8d8a">Streamlit UI</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9a2b2189-cff9-41b1-98ff-28f7c12d3db9">Troubleshooting for HAYSTACK</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#703a5b13-9608-45b3-a111-598ad5ddaa39">ES TransportError</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#23d94077-b498-4a76-a324-86e1631abb1d">Solution</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3bc13133-3f88-4330-bfc7-1a937754e3b6">REST_API ImportError</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d29382d1-cc5b-49f9-afea-2d9d5da6f341">Solution(s)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#47bc75ff-f9ec-4709-9fa3-ab1c9aea12cf">ElasticSearch RequestError</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3f0095f5-a696-4709-8052-77820ac7e8a5">Solution</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#96bff0ab-efde-4db5-aa22-e37afa122daf">Failed loading pipeline component</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6fdee53c-34c3-47f3-ab48-31c230f48cf3">Solution</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#34d91329-1aa5-4a08-81f7-2b4a25a7e9d6">Golden Retriever SETUP</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d559fb2e-7c67-4721-9144-321951bb82b6">Guide to using the Golden Retriever</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#28a5e3cb-db52-4a39-98d2-6d97b1746b27">Installing Prerequisites</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f5089481-1297-49ce-b49e-6936d6dd2d3b">Building the containers</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9713c455-d081-4d8f-a153-b8ded1271869">CSV FORMATTING</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e45656cb-0883-4520-9774-89689363895b">Ammending setup configuration in app/api/config.py</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0f07a2d5-d9e7-416f-811e-5abcf1ebf731">Running the backend</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#464c88bb-46d0-40c4-b982-0e1d9653bd1c">Running the frontend</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4df56227-c469-4f83-b337-64135fa732b7">Troubleshooting for Golden Retriever</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8533d988-b9a2-454d-88e3-68a4cab8eea4">Support </a></div></nav><h1 id="840a6bed-2bf5-4119-9a0e-0a893a3ff7a8" class="">Folder Structure</h1><h1 id="a4677dfe-74a9-4ff4-8ff6-ea23d05da14f" class="">Dev Environment SETUP</h1><ol type="1" id="c5866185-df0a-4697-8974-110816d64b54" class="numbered-list" start="1"><li>Clone the project repository from GitHub </li></ol><pre id="0879cf71-e11b-493b-8f3b-5dd371d2fc90" class="code"><code>git clone https://github.com/PaulineChew/INC-latest.git</code></pre><ol type="1" id="aff1a0d5-6e5c-4287-83df-1f0744e7a60f" class="numbered-list" start="2"><li>Set up a virtual environment and activate it</li></ol><pre id="f652f36a-cadb-4f94-ad66-6488d2fd7bd0" class="code"><code>python -m venv venv
+source venv/Scripts/activate</code></pre><ol type="1" id="22832cf3-d0f5-40e3-b94c-f867c8f7e5f3" class="numbered-list" start="3"><li>Install all required libraries and packages</li></ol><pre id="98970b27-a89e-47e8-a450-48d7ed25c673" class="code"><code>cd haystack
+pip install --upgrade pip
+pip install -e .[all] ## or &#x27;all-gpu&#x27; for the GPU-enabled dependencies</code></pre><p id="d8d9bbed-2061-49bf-a6d6-de8eb8c75999" class="">If you cannot upgrade <code>pip</code> to version 21.3 or higher, you will need to replace:</p><ul id="cae39532-ed50-4246-ac3e-99e5018ccc6e" class="bulleted-list"><li style="list-style-type:disc"><code>[all]</code> with <code>[sql,only-faiss,only milvus1,weaviate,graphdb,crawler,preprocessing,ocr,onnx,ray,dev]</code></li></ul><ul id="471ccbaa-f0d4-49ad-bf97-4e1a43590b7e" class="bulleted-list"><li style="list-style-type:disc"><code>[all-gpu]</code> with <code>[sql,only-faiss-gpu,only-milvus1,weaviate,graphdb,crawler,preprocessing,ocr,onnx-gpu,ray,dev]</code></li></ul><p id="e6057a85-7698-4db5-9063-b1e65cc5a22b" class="">
+</p><ol type="1" id="00a9c936-3961-4754-8439-b8bce26dc5fc" class="numbered-list" start="4"><li>Install REST API and Streamlit UI (from root directory of Haystack repository)</li></ol><pre id="99288cdb-e684-41ba-9b18-50d63c825906" class="code"><code>pip install rest_api/
+pip install ui/</code></pre><h2 id="78b8f4b4-b20a-4bfb-8a09-7dd9f742ce2c" class="">ElasticSearch</h2><p id="01ae2dc2-d9d3-46cc-bc6a-3cfb53242f0d" class="">Install ElasticSearch locally, using a method of your choosing</p><blockquote id="3a257e03-1b2e-409f-8203-521bacf8ec4e" class=""><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html</a></blockquote><p id="bdfa5e30-33c7-4db4-a1b8-4bbcf14cef24" class="">You can also install the ElasticSearch MSI package (older version)</p><blockquote id="db8bbdd2-26be-45d2-83f4-d06b872587e7" class=""><a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/windows.html">https://www.elastic.co/guide/en/elasticsearch/reference/6.8/windows.html</a></blockquote><p id="2df7468f-958c-494e-a850-c97fa0b09e58" class="">
+</p><p id="fbddfa1c-9935-4e1a-a422-4737a8900f8c" class="">Starting ElasticSearch on port 9200 (using .bat file)</p><pre id="382e28f4-88c7-4e88-a22e-70fe3e28dae6" class="code"><code>cd elasticsearch
+./bin/elasticsearch</code></pre><p id="fe24fde3-1937-4105-8489-49d55fc7b1eb" class="">Starting ElasticSearch on port 9200 (as a service)</p><blockquote id="55288d78-7afb-4dbd-9685-d03f917f1acd" class="">If installation was done with the default settings, ElasticSearch should run if you restart your machine.</blockquote><figure id="fd1f28a9-a9be-45ba-8bcd-ff2017dabee2" class="image"><a href="Developmen%209a209/Untitled.png"><img style="width:997px" src="Developmen%209a209/Untitled.png"/></a><figcaption>ElasticSearch running in the Services app</figcaption></figure><h2 id="47a46718-dac9-42fc-ab7b-7810f6eac8bb" class="">REST API</h2><p id="80fdc28f-0626-4f14-bfc0-fca67c2baf1e" class="">Start the REST API (in a fresh Git Bash terminal)</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="207f12c2-7c90-44b3-9c2e-2680d302092d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Remember to activate your virtual environment.</div></figure><pre id="e41cf79a-11ff-4005-9967-698f5e943cc2" class="code"><code>cd haystack
+uvicorn rest_api.application:app</code></pre><h2 id="5e43c221-529c-42eb-b62d-b61d3aba8d8a" class="">Streamlit UI</h2><p id="1ce520de-a884-4b3d-826e-21387a741f19" class="">Start the UI </p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ed43d103-eb16-43a3-a315-446cca8296fc"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Remember to activate your virtual environment.</div></figure><pre id="c3ffedad-d8a6-4c18-8782-cb47e40e6592" class="code"><code>cd haystack
+streamlit run ui/hydra_app.py</code></pre><p id="86bd641a-ab5e-4a32-b229-fb4fae5e5a84" class="">Your application should be running now. Enjoy!</p><h1 id="9a2b2189-cff9-41b1-98ff-28f7c12d3db9" class="">Troubleshooting for HAYSTACK</h1><h2 id="703a5b13-9608-45b3-a111-598ad5ddaa39" class="">ES TransportError</h2><pre id="106e3274-0c48-4763-9af7-3c93050d2afe" class="code code-wrap"><code>TransportError(429, &#x27;cluster_block_exception&#x27;, 
+&#x27;index [document] blocked by: [TOO_MANY_REQUESTS/12/disk usage exceeded flood-stage watermark, index has read-only-allow-delete block];</code></pre><h3 id="23d94077-b498-4a76-a324-86e1631abb1d" class="">Solution</h3><pre id="f550e0fe-de72-4e29-a0eb-ec53a99b4156" class="code code-wrap"><code>curl -XPUT -H &quot;Content-Type: application/json&quot; http://localhost:9200/_cluster/settings -d &#x27;{ &quot;transient&quot;: { &quot;cluster.routing.allocation.disk.threshold_enabled&quot;: false } }&#x27;
+curl -XPUT -H &quot;Content-Type: application/json&quot; http://localhost:9200/_all/_settings -d &#x27;{&quot;index.blocks.read_only_allow_delete&quot;: null}&#x27;</code></pre><h2 id="3bc13133-3f88-4330-bfc7-1a937754e3b6" class="">REST_API ImportError</h2><pre id="9b66e890-2275-4947-9c3e-1d49667a0883" class="code"><code>ModuleNotFoundError: No module named &#x27;rest_api&#x27;</code></pre><h3 id="d29382d1-cc5b-49f9-afea-2d9d5da6f341" class="">Solution(s)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="51074085-dd35-43a5-b383-302bfef9ad6a"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">The solution depends on your error stack trace.</div></figure><pre id="ae3937ac-35ec-444c-b6ef-c5092fcc14b0" class="code"><code>cd rest_api
+uvicorn application:app</code></pre><pre id="2b76a239-d154-444d-b019-89af92ee884c" class="code"><code>cd haystack
+uvicorn rest_api.application:app</code></pre><pre id="b12e3bc1-ce98-487b-842c-31b599969460" class="code"><code>cd haystack
+gunicorn rest_api.application:app</code></pre><h2 id="47bc75ff-f9ec-4709-9fa3-ab1c9aea12cf" class="">ElasticSearch RequestError</h2><pre id="d02d6c9b-417e-4827-8b0a-a66f3b47ff30" class="code code-wrap"><code>RequestError(400, &quot;search_phase_execution_exception: Likely some of your stored documents don&#x27;t have embeddings. Run the document store&#x27;s update_embeddings() method.&quot;, &#x27;No documents with emeddings.&#x27;)</code></pre><h3 id="3f0095f5-a696-4709-8052-77820ac7e8a5" class="">Solution</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e2a823e4-7501-4798-93a7-8e1777f53eae"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Run this code in a fresh ipynb.</div></figure><pre id="fdb7b955-5cb1-4795-ab7c-5e3ce4e4b130" class="code"><code>from haystack.document_stores.elasticsearch import ElasticsearchDocumentStore
+from haystack.retriever.dense import DensePassageRetriever
+
+document_store = ElasticsearchDocumentStore(
+    host=&quot;localhost&quot;,
+    username=&#x27;&#x27;,password=&#x27;&#x27;)
+
+retriever = DensePassageRetriever(
+    document_store=document_store,
+    query_embedding_model=&quot;facebook/dpr-question_encoder-single-nq-base&quot;,
+    passage_embedding_model=&quot;facebook/dpr-ctx_encoder-single-nq-base&quot;
+)</code></pre><pre id="cb5acc55-0d03-4166-abff-25d05a773ba1" class="code"><code>document_store.update_embeddings(retriever)</code></pre><h2 id="96bff0ab-efde-4db5-aa22-e37afa122daf" class="">Failed loading pipeline component</h2><pre id="25dfb8ea-d0aa-4a44-b8fc-c7298c2d3e02" class="code code-wrap"><code>Failed loading pipeline component &#x27;TextFileConverter&#x27;: __init__() got an unexpected keyword argument &#x27;split_paragraphs&#x27;</code></pre><h3 id="6fdee53c-34c3-47f3-ab48-31c230f48cf3" class="">Solution</h3><p id="2aa2901c-108f-44fb-b404-97bd416fc6ae" class="">Go back and look at the which pipeline file you used under rest_api/config.py.</p><p id="7ff4b46e-d151-41c4-86ea-a07f8af08114" class="">Check either the pipelines.yaml or pipelines_dpr.yaml file to see if you defined any components and their parameters incorrectly.</p><p id="aa2d9b2a-8f93-4de2-82b3-321829a47dd5" class="">Check for syntax errors as well.</p><h1 id="34d91329-1aa5-4a08-81f7-2b4a25a7e9d6" class="">Golden Retriever SETUP</h1><p id="8da0f463-bba7-412e-9bfb-872841bf4aa7" class="">Although Golden Retriever is not our framework of choice for this project, it still posses astounding capability in the realm of information retrieval. </p><p id="1141eb51-cc91-4df0-ac40-b288683dac85" class="">You can give it a try and do some comparisons by following the guide below.</p><p id="273e4a71-26c4-404b-a3b7-33d0c0e0762d" class="">
+</p><ol type="1" id="90a3b646-926a-4572-a1f0-5fb16c40818d" class="numbered-list" start="1"><li>Install docker-cli and docker-compose</li></ol><pre id="e308b7c6-0f02-46b6-a07b-ea8cfa948a0c" class="code"><code>apt-get update
+
+apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+
+apt-key fingerprint 0EBFCD88
+
+add-apt-repository \
+   &quot;deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable&quot;
+
+apt-get update
+apt-get install docker-ce-cli</code></pre><pre id="d0713e65-502b-4c13-9bd4-0927886f8756" class="code code-wrap"><code>curl -L &quot;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</code></pre><p id="65ec9c4b-57b1-482c-bf4b-fc7b4aaca922" class="">Check if they are correctly installed.</p><pre id="5967bc46-3db5-4c3a-8ec2-ad0302d917f5" class="code"><code>docker -v &amp;&amp; docker-compose -v</code></pre><p id="ff5caa9b-7e0c-4114-83f5-f9660b658864" class="">
+</p><ol type="1" id="a68e2bd4-eb15-4180-b173-4eca2fda7384" class="numbered-list" start="2"><li>Set up a virtual environment and activate it</li></ol><pre id="91d7668f-aaa3-4fff-a221-f68262fefdb3" class="code"><code>python -m venv venv
+source venv/Scripts/activate</code></pre><h1 id="d559fb2e-7c67-4721-9144-321951bb82b6" class="">Guide to using the Golden Retriever</h1><h2 id="28a5e3cb-db52-4a39-98d2-6d97b1746b27" class="">Installing Prerequisites</h2><p id="a681beb8-c6a2-400d-81de-331504fe89b4" class="">1) Download the file or clone it (<a href="https://github.com/aimakerspace/goldenretriever">https://github.com/aimakerspace/goldenretriever</a>) </p><p id="dec54d2b-1d7f-4b72-b57c-77245c05d104" class="">2) Check if you had docker install by running </p><pre id="dad87a92-76b9-429f-a9eb-78b36b590509" class="code code-wrap"><code>docker -v &amp;&amp; docker-compose -v</code></pre><p id="b2c43e3f-03e3-480f-bfe4-5193a38a5744" class="">3) Set up a virtual environment by running </p><pre id="4631193b-ddf8-4e8e-a728-34a101c78d9b" class="code code-wrap"><code>virtualenv env 
+#or
+python -m venv env</code></pre><p id="94dbb221-d6af-4d5b-9cbc-b8b4739f6cde" class="">4) To open and use the virtual environment run </p><pre id="1e383004-7504-45a2-afbd-81b18b2f23f9" class="code code-wrap"><code>source env/Scripts/activate</code></pre><p id="2368be74-188e-4495-9cb2-469686560f34" class="">5) Install required packages by running (inside the virtual environment!)</p><pre id="5ee07855-235e-413a-824f-ee15a137bb32" class="code code-wrap"><code> pip install -r requirements.txt</code></pre><p id="9bedf92d-e3b4-45d3-af98-7ac3905d04e1" class="">6) Create a .env file in the project root folder to manage Minio access keys. Example:</p><p id="52cde41c-c8dc-4d00-a897-8b6a72d8c763" class="">
+</p><p id="993c3e55-1230-4697-b7ec-8cd27a2a960a" class="">MINIO_URL=localhost:9001</p><p id="ce6120c4-e8b8-472c-a6eb-64ecd9d05752" class="">ACCESS_KEY=minio # change this to a proper access key!</p><p id="aa6de810-2f1e-48aa-b9cd-c9450376f535" class="">SECRET_KEY=minio123 # change to to a proper secret key!</p><p id="c87a278a-4216-4194-9d70-311daa2f5f9b" class="">
+</p><p id="57a5c459-8245-44d5-b4fb-a9e4f306a4a6" class="">Change the docker-compose.yml file, change the access key and secret key to your own settings.</p><p id="036b018f-5725-465e-bf84-d9745dc13028" class="">At minio_handler.py , remove all the ResponseError, BucketAlreadyOwnedByYou, BucketAlreadyExists  inside the file and change it all to just 1 error called InvalidResponseError</p><h2 id="f5089481-1297-49ce-b49e-6936d6dd2d3b" class="">Building the containers</h2><p id="d701b420-2382-42dd-946f-d23f56e89fca" class="">7) Build and start up the multi-container application</p><pre id="531f16bd-a6b8-4cd4-b528-0ca78b8155a9" class="code code-wrap"><code>docker-compose -f docker-compose.yml build</code></pre><p id="d9b5c6a7-53ad-4b5c-a1f5-1abad134202a" class="">Followed by</p><pre id="fdefbed6-2f1f-40ff-91c3-0c922688fe76" class="code code-wrap"><code> docker-compose -f docker-compose.yml up</code></pre><p id="dcdb38cb-32f8-4fc8-850c-13b0cfad70af" class="">The app is supposed to exit whereas minio and elk is suppose to be runnning</p><h3 id="9713c455-d081-4d8f-a153-b8ded1271869" class="">CSV FORMATTING</h3><p id="7022c5a4-4f26-40f4-ac40-bf3e19027fca" class="">Add <strong>--</strong> in front of url, csv file and index_name at create_doc_index.py, at parser.add_arguements</p><p id="cb2ad632-d1bb-449e-85d7-273e681f74e0" class="">CSV columns have to follow this sequence</p><div id="ad14b1ce-915d-4a7f-b8b6-14231b3b2493" class="column-list"><div id="5e6c29a3-5e29-4cb9-bbee-28ec76aac17b" style="width:25%" class="column"><p id="96d50e97-895c-4625-83a5-c97726f5b70b" class=""><strong>ans_id </strong></p></div><div id="66be5647-7536-4c5c-8d32-32ca64648a2a" style="width:25%" class="column"><p id="123f6fcb-8930-4716-b90b-2e12e338569a" class=""><strong>ans_str</strong></p></div><div id="2783b8a9-7cc2-4287-a4c9-f467243c973a" style="width:25%" class="column"><p id="9dc5c934-c9db-405c-9c32-9c5fd30139fe" class=""><strong>query_id</strong></p></div><div id="380586f2-5400-46f1-a222-4974100efd5e" style="width:25%" class="column"><p id="1af2304b-66b1-453f-82c5-6b9d1cdb8267" class=""><strong>query_str</strong></p></div></div><p id="f31fb72f-8416-4da6-80b2-5cd1f10686e4" class="">Upload your datasets by running </p><pre id="573636b5-9696-4c09-b837-af87288e6477" class="code code-wrap"><code>python -m src.elasticsearch.create_doc_index --url localhost --csv_file data/(yourcsvfilename).csv --index_name (yourownindexname)</code></pre><ul id="b7a4637b-4336-4ea2-bfe6-8087342e4712" class="bulleted-list"><li style="list-style-type:disc">url: elasticsearch url</li></ul><ul id="6ccdcd3b-b8ee-4e2b-af60-596bce75865b" class="bulleted-list"><li style="list-style-type:disc">csv_file: datasets (csv file with QA pairs)</li></ul><ul id="696a6018-57a9-4927-a77c-ceb046b4a11d" class="bulleted-list"><li style="list-style-type:disc">index_name: name of index to create </li></ul><h3 id="e45656cb-0883-4520-9774-89689363895b" class="">Ammending setup configuration in app/api/config.py</h3><ul id="65c36139-79a1-4620-ab98-e267f1f54df6" class="bulleted-list"><li style="list-style-type:disc">QA_INDEX: index name that you created (e.g: test, (yourownindexname))</li></ul><ul id="c360c593-3d21-4637-8989-404e957406ec" class="bulleted-list"><li style="list-style-type:disc">INDEX_BUCKET = &#x27;test-index&#x27;</li></ul><ul id="dc31d912-788d-4499-900f-d0f473264120" class="bulleted-list"><li style="list-style-type:disc">INDEX_PICKLE = &#x27;test.pkl&#x27;</li></ul><ul id="d15396fc-a0c0-4529-b28a-4514bab6544b" class="bulleted-list"><li style="list-style-type:disc">INDEX_FILE = &#x27;test.idx&#x27;</li></ul><ul id="6526ad10-d63a-4f8a-a3f7-786ab1c2bd88" class="bulleted-list"><li style="list-style-type:disc">INDEX_PREFIX = &#x27;test&#x27;</li></ul><p id="b90e60ba-0e6e-4ef9-9015-4fdab7440ab6" class="">
+</p><p id="bcfc716e-d6e2-4db1-870b-6214be1381c4" class="">10) Amend setup configuration in <strong>app/api/config.py.</strong></p><p id="49aa6118-4e7b-46bf-8247-d1f013cbb3c0" class="">11) To run the finetune scripts:</p><pre id="06cc41b2-943f-43f3-88bf-92d55eda4420" class="code code-wrap"><code>python -m src.finetune.main 
+#you can amend src/finetune/config.py to insert preferred finetuning parameters</code></pre><p id="c094a306-3dde-4632-b7f8-1f259d23b0f1" class="">
+</p><p id="75815337-76bd-40a4-8071-a6dc89963e14" class="">12) To encode your documents:</p><pre id="c43af6ee-22e3-45fe-82ee-5c9360442db2" class="code code-wrap"><code>python -m src.dvc_pipeline_scripts.index_encode --data ./data/test.csv --output_folder model_artefacts --index_prefix test --gr_model USEEncoder --savedir ./test_finetune/model_test/USE/best/0/</code></pre><ul id="29f38e35-0fb3-4016-bda3-0a8151f24369" class="bulleted-list"><li style="list-style-type:disc">-data: path to file with raw responses</li></ul><ul id="548d9574-479f-468d-a544-6ba5f202544a" class="bulleted-list"><li style="list-style-type:disc">-output_folder: path to save index</li></ul><ul id="e0342801-955e-4e59-ae82-0c90174da0d4" class="bulleted-list"><li style="list-style-type:disc">-index_prefix: prefix to add to -data.pkl of index</li></ul><ul id="b03c50f7-b8e2-4da4-a339-85e306419480" class="bulleted-list"><li style="list-style-type:disc">-gr_model: name of gr model</li></ul><ul id="d6528f11-b6d9-40f6-965a-3fde18078854" class="bulleted-list"><li style="list-style-type:disc">-savedir: path to fine-tuned encoder weights</li></ul><ul id="cd4e4b2d-0bb8-4488-a263-c80a1e8463dd" class="bulleted-list"><li style="list-style-type:disc">-index_name the index name define earlier when uploading datasets(e.g:test)</li></ul><h3 id="0f07a2d5-d9e7-416f-811e-5abcf1ebf731" class="">Running the backend</h3><p id="dd2ae0ea-9b76-4ba0-bfd0-db17f6060e3b" class="">13) To start up  backend app run </p><pre id="4cb6d5b9-f07f-49ef-9dfb-cbb124e46095" class="code"><code>uvicorn app.api.main_es:app</code></pre><h3 id="464c88bb-46d0-40c4-b982-0e1d9653bd1c" class="">Running the frontend</h3><p id="3a55953e-65d7-4e4e-80c5-efb014d9759f" class="">14) Start the front end using: </p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b6380501-384b-419e-9b4f-d21e6da404f2"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Use streamlit version 0.60.0.</div></figure><pre id="91106ac4-dd8a-443a-ab44-cc2df7431722" class="code"><code>streamlit run app/streamlit/main.py -- --url http://localhost:8000</code></pre><h1 id="4df56227-c469-4f83-b337-64135fa732b7" class="">Troubleshooting for Golden Retriever</h1><p id="557ae30b-1484-496a-b9fa-b3e167005b7d" class="">When encountering a “ elasticsearch: [1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144] ” error ,use WSL system</p><p id="8dbad184-2953-4e19-9f18-0bc481aa5574" class="">Run this code on <strong>powershell</strong> to activate the subsytem</p><pre id="c3b3f6ee-a02d-4164-974c-fd89e959b004" class="code"><code>  wsl -d docker-desktop</code></pre><p id="34fb02f2-778c-444c-9b4d-6286b03acb4f" class="">Change the memory count by entering </p><pre id="b1422dd8-4601-43ae-8e86-0a4a0450abd8" class="code"><code>sysctl -w vm.max_map_count=262144</code></pre><p id="4444cc07-1c89-4bf2-a085-fb6312a38d74" class="">If u see an “<strong>OSError Saved Model does not exist</strong>” error, at logs, click into your tfhub_modules there and enter it to empty the folder to clear cache.</p><h1 id="8533d988-b9a2-454d-88e3-68a4cab8eea4" class="">Support </h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b902a0dc-a29a-452f-883f-8d271d0c12e8"><div style="font-size:1.5em"><span class="icon">✉️</span></div><div style="width:100%"><a href="mailto:natashac.20@ichat.ep.edu.sg">natashac.20@ichat.ep.edu.sg</a>
+<a href="mailto:hans99.20@ichat.sp.edu.sg">hans99.20@ichat.sp.edu.sg</a>
+<a href="mailto:amosloh19.20@ichat.sp.edu.sg">amosloh19.20@ichat.sp.edu.sg</a>
+<a href="mailto:ganenn17.20@ichat.sp.edu.sg">ganenn17.20@ichat.sp.edu.sg</a>
+<a href="mailto:seejoey23.20@ichat.sp.edu.sg">seejoey23.20@ichat.sp.edu.sg</a></div></figure><p id="be42eee2-801b-4c81-bcf0-954916e64f6e" class="">
+</p><p id="8e9f9b3d-522b-4186-86ee-8819c22bde65" class="">💬 Haystack Github Discussions</p><blockquote id="f862db19-c0ab-459f-b0bb-8331c530721a" class=""><a href="https://github.com/deepset-ai/haystack/discussions">https://github.com/deepset-ai/haystack/discussions</a></blockquote><p id="b5b9a28e-d023-479a-81a3-c5e73035f04f" class="">🤝 Haystack Slack Channel</p><blockquote id="1ed6b757-f608-404b-b48e-256adc50b6c0" class=""><a href="https://haystack.deepset.ai/community/join">https://haystack.deepset.ai/community/join</a></blockquote><p id="17e43a76-cd1b-4f0a-96d6-180b2857278e" class="">
+</p><p id="b39f6ba6-9e71-4d3c-baf5-d9f204e84001" class="">
+</p><p id="e5f671f6-d4e0-4f88-8ffc-0c18a8b38598" class="">
+</p></div></article></body></html>
